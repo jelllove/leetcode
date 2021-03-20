@@ -3,51 +3,6 @@
 using namespace std;
 
 
-//冒泡排序
-template<class T>
-void bubbleSort(T *data, size_t size)
-{
-    if (size <= 0)
-    {
-        return;
-    }
-
-    for (int i = size - 1; i >= 0; --i)
-    {
-        for (int j = 0; j <= i - 1; ++j)
-        {
-            if (data[j] > data[j + 1])
-            {
-                swap(data[j], data[j+1]);
-            }
-        }
-    }
-}
-
-//快速排序
-template<class T>
-void quickSort(T *data, int l, int r)
-{
-    if (l >= r)
-        return;
-    int i = l;
-    int j = r;
-
-    int ref = data[i];
-    while (i < j)
-    {
-        while (data[j] > ref && j > i)
-            --j;
-        data[i] = data[j];
-        while (data[i] < ref && j > i)
-            ++i;
-        data[j] = data[i];
-    }
-    data[i] = ref;
-    quickSort(data, l, i - 1);
-    quickSort(data, i + 1, r);
-}
-
 
 //二分查找法(递归法), return the index
 template<class T>

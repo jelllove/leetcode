@@ -4,9 +4,10 @@ jelllove@126.com
 
 
 # leetcode
-## 所有的题目都在leetcode这个目录下
-## 我使用的开发环境是VS Code, Mingw-64, C++17
+##所有的题目都在leetcode这个目录下
+##我使用的开发环境是VS Code, Mingw-64, C++17
 
 # network
-## 放了一些和网络编程相关的代码
+##放了一些和网络编程相关的代码
+
 

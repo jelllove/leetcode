@@ -24,6 +24,30 @@ void bubbleSort(T *data, size_t size)
     }
 }
 
+//快速排序
+template<class T>
+void quickSort(T *data, int l, int r)
+{
+    if (l >= r)
+        return;
+    int i = l;
+    int j = r;
+
+    int ref = data[i];
+    while (i < j)
+    {
+        while (data[j] > ref && j > i)
+            --j;
+        data[i] = data[j];
+        while (data[i] < ref && j > i)
+            ++i;
+        data[j] = data[i];
+    }
+    data[i] = ref;
+    quickSort(data, l, i - 1);
+    quickSort(data, i + 1, r);
+}
+
 
 //二分查找法(递归法), return the index
 template<class T>
@@ -138,12 +162,12 @@ void printArray(T *data, size_t size)
 int main(int argc, char *argv[])
 {
 
-    bitOperation();
 
+    int data[] = {4, 2, 5, 6, 1, 9, 8, 7};
 
-    int data[] = {1, 2, 4, 5, 6, 7, 9};
-
-    cout << binaryFind2(data, 0, sizeof(data) / sizeof(data[0]) - 1, atoi(argv[1])) << endl;
+    printArray(data, sizeof(data) / sizeof(data[0]));
+    quickSort(data, 0, sizeof(data) / sizeof(data[0]) - 1);
+    printArray(data, sizeof(data) / sizeof(data[0]));
 
     return EXIT_SUCCESS;
 

@@ -53,6 +53,8 @@ int main(int argc, char *argv[])
 
     int data[] = {4, 2, 5, 6, 1, 9, 8, 7};
 
+    sort(data, data + sizeof(data) / sizeof(data[0]));
+
     if (binaryFind(data, 0, sizeof(data)/sizeof(data[0]) - 1, 8))
         cout<<"Found"<<endl;
     else

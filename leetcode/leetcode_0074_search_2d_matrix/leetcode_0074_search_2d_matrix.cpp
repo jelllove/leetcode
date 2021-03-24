@@ -1,78 +1,37 @@
-#include "public.h"
 
 
 
 class Solution {
 public:
+    size_t rows = 0;
+    size_t cols = 0;
     
-    int getValueByIndex(vector<vector<int>>& matrix, int index)
+    bool binaryFind(vector<vector<int>>& matrix, int l, int r, int &target)
     {
-        size_t rows = matrix.size();
-        size_t cols = (rows > 0 ? matrix[0].size() : 0);
-        
-        long long total = rows * cols;
-        
-        if (index < 0 || index >= total)
+        while (l < r)
         {
-            return INT_MIN;
-        }
-        else
-        {
-            int rowIndex = index / cols;
-            int colIndex = index % cols;
+            int m = (r - l) / 2 + l; //得到中间值，先减后加，这样可以防止溢出
             
-            return matrix[rowIndex][colIndex];
-        }
-            
-    }
-    
-    bool binaryFind(vector<vector<int>>& matrix, int leftIndex, int rightIndex, int &target)
-    {
-        if (leftIndex >= rightIndex)
-        {
-            if (getValueByIndex(matrix, leftIndex) == target)
-            {
+            if (matrix[m / cols][m % cols] == target)
                 return true;
-            }
+            else if (matrix[m / cols][m % cols] > target)   //根据index在二维表中找到对应的行与列
+                r = m - 1;
             else
-            {
-                return false;
-            }
+                l = m + 1;
         }
+        
+        if (matrix[l / cols][l % cols] == target)//最后两个l 和 r重合了
+            return true;
         else
-        {
-            int midIndex = ((rightIndex - leftIndex) / 2) + leftIndex;
-            int value = getValueByIndex(matrix, midIndex);
-            if (value == target)
-            {
-                return true;
-            }
-            else if (value > target)
-            {
-                return binaryFind(matrix, leftIndex, midIndex - 1, target);
-            }
-            else
-            {
-                return binaryFind(matrix, midIndex + 1, rightIndex, target);
-            }
-        }
+            return false;
     }
     
     bool searchMatrix(vector<vector<int>>& matrix, int target) {
     
-        size_t rows = matrix.size();
-        size_t cols = (rows > 0 ? matrix[0].size() : 0);
+        rows = matrix.size();
+        cols = (rows > 0 ? matrix[0].size() : 0);
         
-        long long total = rows * cols;
         
-        return binaryFind(matrix, 0, total - 1, target);
+        return binaryFind(matrix, 0, (rows * cols) - 1, target);
     }
 };
-
-int main()
-{
-
-    vector<vector<int>> vecInput = {{1}, {3}};
-    cout << Solution().searchMatrix(vecInput, 2);
-    return 0;
-}

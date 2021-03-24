@@ -14,13 +14,15 @@ void printArray(T *data, size_t size)
     cout<<endl;
 }
 
+
 int main(int argc, char *argv[])
 {
 
-
-    int data[] = {4, 2, 5, 6, 1, 9, 8, 7};
-
-    printArray(data, sizeof(data) / sizeof(data[0]));
+    vector<int> vec = {-1,2,1,-4};
+    
+    threeSumClosest(vec, 1);
+    
+    //printArray(data, sizeof(data) / sizeof(data[0]));
     
     return EXIT_SUCCESS;
 

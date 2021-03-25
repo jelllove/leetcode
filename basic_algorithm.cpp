@@ -19,9 +19,7 @@ int main(int argc, char *argv[])
 {
 
     vector<int> vec = {-1,2,1,-4};
-    
-    threeSumClosest(vec, 1);
-    
+
     //printArray(data, sizeof(data) / sizeof(data[0]));
     
     return EXIT_SUCCESS;

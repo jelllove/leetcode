@@ -68,7 +68,12 @@
 			"tuple": "cpp",
 			"unordered_map": "cpp",
 			"xhash": "cpp",
-			"xtree": "cpp"
+			"xtree": "cpp",
+			"array": "cpp",
+			"optional": "cpp",
+			"functional": "cpp",
+			"*.tcc": "cpp",
+			"string_view": "cpp"
 		}
 	}
 }

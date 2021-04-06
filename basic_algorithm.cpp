@@ -13,72 +13,65 @@ void printArray(T *data, size_t size)
     }
     cout<<endl;
 }
-
-
-int findDuplicate(vector<int>& nums) {
-        //Method 1: using sort
-        /*
-        sort(nums.begin(), nums.end());
+vector<int> sortArrayByParityII(vector<int>& nums) {
         
-        for (int i = 0; i < nums.size() - 1; ++i)
+        
+        if (nums.size() <= 1)
+            return nums;
+        int oddIndex = 1;
+        int evenIndex = 0;
+        
+        while (oddIndex < nums.size() &&
+              evenIndex < nums.size())
         {
-            if (nums[i] == nums[i + 1])
+            while (evenIndex < nums.size() && (nums[evenIndex] & 0x1 == 0))
             {
-                return nums[i];
+                evenIndex += 2;
             }
-                
-        }
-        */
-        
-        //Method 2: using the hash table
-        /*
-        //pair = value + count
-        unordered_map<int, int> um;
-        
-        for (auto &n : nums)
-        {
-            um[n]++;
-            if (um[n] >= 2)
-                return n;
-        }
-        
-        return 0;
-        */
-        
-        //Method 3: 因为题目限制了这个数组的值只能是从1到N之间
-        //那么可以利用i 从1到n之间进行遍历，然后对相当的index进行一个取负值的操作
-        //如果发现这个值已经被取过一次负值了，那就是重复的
-        //Method 4: 
-        int slow = nums[0];
-        int fast = nums[0];
-        
-        //相当于利用两个快慢指针先找到那个相遇的点，然后，再让另一个回到起点
-        //然后再一起走，这样就可以找到那个相同的点了
-        do
-        {
-            slow = nums[slow];
-            fast = nums[nums[fast]];
-        }while (slow != fast);
-        
-        fast = nums[0];
-        
-        while (fast != slow)
-        {
-            slow = nums[slow];
-            fast = nums[fast];
+            
+            
+            while (oddIndex < nums.size() && (nums[oddIndex] & 0x1 == 0x1))
+            {
+                oddIndex += 2;
+            }
+            
+            if (oddIndex < nums.size() &&
+              evenIndex < nums.size())
+            {
+                swap(nums[oddIndex], nums[evenIndex]);
+            }
+            else
+            {
+                break;
+            }
         }
         
-        return fast;
-        
-        return 0;
+        return nums;
     }
-
+int maxProduct(vector<int>& nums) {
+        int maxEnd = nums[0];
+        int minEnd = nums[0];
+        int ans = nums[0];
+        for (int i = 1; i < nums.size(); ++i)
+        {
+            int end1 = maxEnd * nums[0];
+            int end2 = minEnd * nums[0];
+            
+            maxEnd = max(max(end1, end2), nums[i]);
+            minEnd = min(min(end1, end2), nums[i]);
+            
+            ans = max(ans, maxEnd);
+        }
+        return ans;
+    }
 
 int main(int argc, char *argv[])
 {
-    vector<int> vec = {1,3,4,2,2};
+    vector<int> vec = {2, 3, -2, 4};
 
-    findDuplicate(vec);
+    maxProduct(vec);
+
+   // sortArrayByParityII(vec);
 
     
     return EXIT_SUCCESS;

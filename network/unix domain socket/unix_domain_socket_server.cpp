@@ -41,6 +41,6 @@ int main()
         /* close the socket */
         close(client_sockfd);  
     }
-    
-    return 0;  
+
+    return 0;
 }  

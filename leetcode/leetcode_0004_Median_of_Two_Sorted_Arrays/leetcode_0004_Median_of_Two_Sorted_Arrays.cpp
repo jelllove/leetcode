@@ -1,0 +1,134 @@
+class Solution {
+public:
+    double findMedianSortedArrays(vector<int>& nums1, vector<int>& nums2) {
+        //Method 1: vector + vector, sort
+        /*
+        vector<int> ans = nums1;
+        ans.insert(ans.end(), nums2.begin(), nums2.end());
+        std::sort(ans.begin(), ans.end());
+        
+        if (ans.size() == 0)
+            return 0.0;
+        
+        if ((ans.size() & 0x01) == 0x01)
+        {
+            return (double)ans[ans.size() / 2];
+        }
+        else
+        {
+            return (double)(ans[ans.size() / 2] + ans[ans.size() / 2 - 1]) / 2.0;
+        }
+        */
+        
+        //Method 2: Another vector to insert the value
+        /*
+        int total = nums1.size() + nums2.size();
+        
+        vector<int> ans(total, 0);
+        
+        int i1 = 0;
+        int i2 = 0;
+        int index = 0;
+        
+        while (i1 < nums1.size() || i2 < nums2.size())
+        {
+            if (i1 >= nums1.size())
+            {
+                ans[index++] = nums2[i2++];
+            }
+            else if (i2 >= nums2.size())
+            {
+                ans[index++] = nums1[i1++];
+            }
+            else
+            {
+                if (nums1[i1] >= nums2[i2])
+                {
+                    ans[index++] = nums2[i2++];
+                }
+                else
+                {
+                    ans[index++] = nums1[i1++];
+                }
+            }
+        }
+        
+        if ((ans.size() & 0x01) == 0x01)
+        {
+            return (double)ans[ans.size() / 2];
+        }
+        else
+        {
+            return (double)(ans[ans.size() / 2] + ans[ans.size() / 2 - 1]) / 2.0;
+        }
+        */
+    
+        //Method 3: using two pointer
+        int total = nums1.size() + nums2.size();
+        int MedianIndex = 0;
+        int count = 1;
+        if ((total & 0x01) == 0x01)
+        {
+            MedianIndex = total / 2;
+            count = 1;
+        }
+        else
+        {
+            MedianIndex = total / 2 - 1;
+            count = 2;
+        }
+        
+        int i1 = 0;
+        int i2 = 0;
+        double val = 0.0;
+        int got = 0;
+        int minVal = 0.0;
+        
+        vector<int> *pList = nullptr;
+        int *pListIndex = nullptr;
+        
+        while (i1 < nums1.size() || i2 < nums2.size())
+        {
+            
+            if (i1 >= nums1.size())
+            {
+                pList = &nums2;
+                pListIndex = &i2;
+            }
+            else if (i2 >= nums2.size())
+            {
+                pList = &nums1;
+                pListIndex = &i1;
+            }
+            else
+            {
+                if (nums1[i1] >= nums2[i2])
+                {
+                    pList = &nums2;
+                    pListIndex = &i2;
+                }
+                else
+                {
+                    pList = &nums1;
+                    pListIndex = &i1;
+                }
+            }
+            
+            if (
+                ((i1 + i2) == MedianIndex) || ((i1 + i2) == MedianIndex + 1 && count == 2)
+                )
+            {
+                val +=  (*pList)[*pListIndex];
+                ++got;
+            }
+            ++(*pListIndex);
+            
+            if (got == count)
+                break;
+        }
+        
+        return val / double(count);
+        
+        
+    }
+};

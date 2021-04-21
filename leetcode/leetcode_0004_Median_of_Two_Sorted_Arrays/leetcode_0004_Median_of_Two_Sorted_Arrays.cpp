@@ -64,27 +64,31 @@ public:
         */
     
         //Method 3: using two pointer
-        int total = nums1.size() + nums2.size();
-        int MedianIndex = 0;
+        int total = nums1.size() + nums2.size();  //总的个数
+        int MedianIndex = 0;//中间的那个值的位置
         int count = 1;
         if ((total & 0x01) == 0x01)
         {
+            //如果是奇数，那中间的位置直接除2可得，然后个数也只要一个就可以了
             MedianIndex = total / 2;
             count = 1;
         }
         else
         {
+            //如果是偶数，那要取中间的两个值
             MedianIndex = total / 2 - 1;
             count = 2;
         }
         
+        //两个指针
         int i1 = 0;
         int i2 = 0;
+        //最后要返回的值
         double val = 0.0;
-        int got = 0;
-        int minVal = 0.0;
+        int got = 0;//已经取得的值
         
-        vector<int> *pList = nullptr;
+        //因为要在两个VECTOR中来回的改对应的指针,所以在比较了两个VECTOR的大小后，使用指针更方便一点
+        vector<int> *pList = nullptr; 
         int *pListIndex = nullptr;
         
         while (i1 < nums1.size() || i2 < nums2.size())

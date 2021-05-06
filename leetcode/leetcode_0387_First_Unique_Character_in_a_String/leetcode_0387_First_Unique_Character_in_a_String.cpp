@@ -2,6 +2,7 @@ class Solution {
 public:
     int firstUniqChar(string s) {
         //Method 1: using the hash + pair
+        /*
         unordered_map<char, pair<int, int>> um;
         
         int i = 0;
@@ -23,5 +24,23 @@ public:
                 return i;
         }
         return -1;
+        */
+        
+        //Method 2: using the hash only
+        unordered_map<char, int> um;
+        
+        int i = 0;
+        for (i = 0; i < s.size(); ++i)
+        {
+            um[s[i]]++;
+        }
+        
+        for (i = 0; i < s.size(); ++i)
+        {
+            if (um[s[i]] == 1)
+                return i;
+        }
+        return -1;
+    
     }
 };

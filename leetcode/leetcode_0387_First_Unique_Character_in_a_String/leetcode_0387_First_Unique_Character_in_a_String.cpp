@@ -27,6 +27,7 @@ public:
         */
         
         //Method 2: using the hash only
+        /*
         unordered_map<char, int> um;
         
         int i = 0;
@@ -41,6 +42,24 @@ public:
                 return i;
         }
         return -1;
+        */
+        
+        //Method 3: using the vector
+        vector<int> vec(26, 0);
+        
+        int i = 0;
+        for (i = 0; i < s.size(); ++i)
+        {
+            vec[s[i] - 'a']++;
+        }
+        
+        for (i = 0; i < s.size(); ++i)
+        {
+            if (vec[s[i] - 'a'] == 1)
+                return i;
+        }
+        return -1;
+    
     
     }
 };

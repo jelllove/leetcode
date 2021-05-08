@@ -27,7 +27,15 @@ public:
     }
     
     int maxDepth(TreeNode* root) {
+        //Method 1: using the traditional recursion
+        /*
         helper(root, 1);
         return m_depth;
+        */
+        
+        //Method 2: using a very simple recusion;
+        if (root == nullptr)
+            return 0;
+        return 1 + max(maxDepth(root->left), maxDepth(root->right));
     }
 };

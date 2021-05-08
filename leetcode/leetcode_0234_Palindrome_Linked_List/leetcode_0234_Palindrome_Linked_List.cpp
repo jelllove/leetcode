@@ -77,5 +77,50 @@ public:
         return true;
         */
         
+        //Method 3: reserve the link, but I do not think it is good.
+        
+        if (head == nullptr)
+            return false;
+        if (head->next == nullptr)
+            return true;
+        
+        ListNode *cur = NULL;
+        ListNode *slow = head;
+        ListNode *fast = head->next;
+        
+        
+        while (fast->next != nullptr && fast->next->next != nullptr)
+        {
+            slow = slow->next;
+            fast = fast->next->next;
+            
+        }
+        slow = slow->next;
+        
+        if (fast->next != nullptr)
+        {
+            slow = slow->next;
+        }
+        
+        while (slow != nullptr)
+        {
+            ListNode *tmp = slow;
+            slow = slow->next;
+            tmp->next = cur;
+            cur = tmp;
+        }
+        
+        while (cur != nullptr)
+        {
+            if (cur->val != head->val)
+                return false;
+            
+            cur = cur->next;
+            head = head->next;
+        }
+        
+        
+        return true;
+        
     }
 };

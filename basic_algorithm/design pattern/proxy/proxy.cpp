@@ -2,6 +2,9 @@
 
 using namespace std;
 
+//代理模式
+
+
 //接口类
 class IBoy
 {

@@ -4,9 +4,6 @@
 using namespace std;
 
 
-
-
-
 class CAutoLock
 {
 public:
@@ -69,8 +66,6 @@ private:
     {
     }
 
-    
-
 };
 
 //初始化这个静态指针
@@ -87,8 +82,7 @@ int main(int argc, char *argv[])
     CSingleton *g = CSingleton::getInstance();
 
     g->WhoAmI();
-
-
+    
     g = CSingleton::getInstance();
 
     g->WhoAmI();

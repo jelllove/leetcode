@@ -5,6 +5,7 @@
 
 using namespace std;
 
+//观察者模式
 
 class IObserver
 {
@@ -34,12 +35,35 @@ public:
 };
 
 
-class CMsgCenter
+
+
+class ISubject
 {
 public:
-    void addObserver(IObserver *pObserver)
+    virtual void attachObserver(IObserver *pObserver) = 0;
+    virtual void detachObserver(IObserver *pObserver) = 0;
+    virtual void HandleMsg(char *msg) = 0;
+};
+
+
+class CMsgCenter : public ISubject
+{
+public:
+    void attachObserver(IObserver *pObserver)
     {
         observerList.push_back(pObserver);
+    }
+
+    void detachObserver(IObserver *pObserver)
+    {
+        for (int i = 0; i < observerList.size(); ++i)
+        {
+            if (observerList[i] == pObserver)
+            {
+                observerList.erase(observerList.begin() + i);
+                return;
+            }
+        }
     }
 
     void HandleMsg(char *msg)
@@ -58,16 +82,21 @@ private:
 
 int main(int argc, char *argv[])
 {
-    CMsgCenter msgCenter;
+    ISubject *subject = new CMsgCenter;
 
-    CAObserver a;
-    CBObserver b;
+    IObserver *a = new CAObserver;
+    IObserver *b = new CBObserver;
 
-    msgCenter.addObserver(&a);
-    msgCenter.addObserver(&b);
+    subject->attachObserver(a);
+    subject->attachObserver(b);
 
-    msgCenter.HandleMsg((char *)"Hello");
-    msgCenter.HandleMsg((char *)"你好");
+    subject->HandleMsg((char *)"Hello");
+    subject->HandleMsg((char *)"你好");
+
+    subject->detachObserver(b);
+
+    subject->HandleMsg((char *)"Hello");
+    subject->HandleMsg((char *)"你好");
 
     return EXIT_SUCCESS;
 }

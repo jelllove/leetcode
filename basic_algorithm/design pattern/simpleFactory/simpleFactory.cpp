@@ -1,5 +1,6 @@
 #include <iostream>
 
+//简单工厂
 using namespace std;
 
 class IFruit

@@ -2,6 +2,7 @@
 
 using namespace std;
 
+//抽像工厂
 
 //Product A: Keyboard
 class IKeyBoard

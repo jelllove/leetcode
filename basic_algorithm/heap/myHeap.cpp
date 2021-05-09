@@ -148,6 +148,8 @@ private:
 int main()
 {
 
+
+    //using my heap
     CMyHeap<int> heap;
 
     heap.push(7);
@@ -161,6 +163,24 @@ int main()
     {
         cout<<"Peek:"<<heap.peek()<<endl;
         cout<<heap.pop()<<endl;
+    }
+
+    //using official heap
+    //sort用greater排序，则a[0]到a[n]有大到小排序。
+    //priority_queue用greater排序，则先取出的是最小值。
+    priority_queue<int, vector<int>, less<int>> pq;
+
+    pq.push(4);
+    pq.push(1);
+    pq.push(2);
+    pq.push(3);
+    pq.push(9);
+    pq.push(8);
+
+    while (!pq.empty())
+    {
+        cout<<pq.top()<<endl;
+        pq.pop();
     }
 
     return 0;

@@ -32,7 +32,6 @@ public:
     int m_c;
 };
 
-
 int main(int argc, char *argv[])
 {
     C c;

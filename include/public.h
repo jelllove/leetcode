@@ -18,6 +18,7 @@
 #include <numeric>
 #include <unordered_map>
 #include <locale>
+#include <cmath>
 
 using namespace std;
 

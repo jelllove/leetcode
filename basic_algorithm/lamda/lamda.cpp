@@ -1,6 +1,7 @@
 //C++ 11 lamda的用法
 #include <iostream>
-
+#include <vector>
+#include <algorithm>
 
 using namespace std;
 
@@ -10,7 +11,7 @@ class A
 public:
     void dummy()
     {
-        auto f = [this](){cout<<this->m_data<<endl;};
+        auto f = [this](){cout<<"Class A:"<<this->m_data<<endl;};
 
         f();
     }
@@ -71,10 +72,14 @@ int main(int argc, char *argv[])
 
 
     
-    cout<<"Lamda G:"<< A().dummy()<<endl;
+    A().dummy();
+
+    auto lamdaG = [=](){return val_a+1;};
+    cout<<"Lamda G:"<< lamdaG() <<endl;
 
 
-
+    vector<int> vec = {4, 5,6,2,1, 3};
+    std::sort(vec.begin(), vec.end(), [](const int &a, const int &b){return a < b;});
 
     return EXIT_SUCCESS;
 }

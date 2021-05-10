@@ -4,6 +4,21 @@
 
 using namespace std;
 
+
+class A
+{
+public:
+    void dummy()
+    {
+        auto f = [this](){cout<<this->m_data<<endl;};
+
+        f();
+    }
+
+private:
+    int m_data = 9;
+};
+
 int main(int argc, char *argv[])
 {
     //Define a lamda function
@@ -55,10 +70,8 @@ int main(int argc, char *argv[])
     cout<<"Lamda F:"<< val_a<<","<<val_b<<endl;
 
 
-    //using the all Reference method into the lamda
-    auto lamdaG = [this](){return this->val_a;};
     
-    cout<<"Lamda G:"<< lamdaG()<<endl;
+    cout<<"Lamda G:"<< A().dummy()<<endl;
 
 
 

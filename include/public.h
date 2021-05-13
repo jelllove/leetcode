@@ -19,6 +19,9 @@
 #include <unordered_map>
 #include <locale>
 #include <cmath>
+#include <stdlib.h>
+#include <string.h>
+#include <memory>
 
 using namespace std;
 

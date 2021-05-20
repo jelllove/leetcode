@@ -84,3 +84,36 @@ public:
         return maxCount;
     }
 };
+
+
+//Method 3: Better solution
+class Solution {
+public:
+    int lengthOfLongestSubstring(string str) {
+        bool exist[256] = {false};
+        
+        int maxLen = 0;
+        
+        int pos = 0;
+        
+        for (int i = 0; i < str.size(); ++i)
+        {
+            if (exist[str[i]])
+            {
+                do
+                {
+                    exist[str[pos]] = false;
+                    ++pos;
+                }while (exist[str[i]]);
+                
+            }
+            
+            exist[str[i]] = true;
+            maxLen = max(maxLen, i - pos + 1);
+        }
+        
+        return maxLen;
+        
+        
+    }
+};

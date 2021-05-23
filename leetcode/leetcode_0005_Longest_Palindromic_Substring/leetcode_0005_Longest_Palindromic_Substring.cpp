@@ -55,7 +55,6 @@ public:
         
         
         //Method 2
-        
         if (s.size() <= 1)
             return s;
         

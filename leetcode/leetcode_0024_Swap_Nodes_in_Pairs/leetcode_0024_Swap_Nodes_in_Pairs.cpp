@@ -15,7 +15,7 @@ public:
             return head;
         
         //Method 1: go through, and store in the vector;
-    
+        /*
         vector<ListNode *> vec;
         while (head != nullptr)
         {
@@ -38,6 +38,43 @@ public:
             tail->next = vec[i];
             tail = tail->next;
             tail->next = nullptr;
+        }
+        
+        return ans.next;
+        */
+        
+        
+        //Method 2: using three ptr
+        ListNode ans;
+        ListNode *tail = &ans;
+        
+        ListNode *first = head;
+        ListNode *second = head->next;
+        ListNode *third = head->next->next;
+        
+        while (first != nullptr)
+        {
+            if (second != nullptr)
+            {
+                tail->next = second;
+                tail = tail->next;
+            }
+            
+            tail->next = first;
+            tail = tail->next;
+            tail->next = nullptr;
+            
+            
+            first = third;
+            if (first != nullptr)
+                second = first->next;
+            else
+                second = nullptr;
+                
+            if (second != nullptr)
+                third = second->next;
+            else
+                third = nullptr;
         }
         
         return ans.next;

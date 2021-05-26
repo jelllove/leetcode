@@ -10,9 +10,15 @@
  */
 class Solution {
 public:
+    
+    
+    
+    
     ListNode* swapPairs(ListNode* head) {
         if (head == nullptr || head->next == nullptr)
             return head;
+        
+        
         
         //Method 1: go through, and store in the vector;
         /*
@@ -45,6 +51,7 @@ public:
         
         
         //Method 2: using three ptr
+        /*
         ListNode ans;
         ListNode *tail = &ans;
         
@@ -78,5 +85,16 @@ public:
         }
         
         return ans.next;
+        */
+        
+        //Method 3: using the recursion
+        
+        ListNode* tail = head->next->next;
+        ListNode* pre = head;
+        head = head->next;
+        head->next = pre;
+        pre->next = swapPairs(tail);
+        return head;
+        
     }
 };

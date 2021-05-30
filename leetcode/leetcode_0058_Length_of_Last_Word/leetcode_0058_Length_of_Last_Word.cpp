@@ -2,6 +2,7 @@ class Solution {
 public:
     int lengthOfLastWord(string str) {
         //Method 1: Brute force
+        /*
         int e = -1;
         int s = -1;
         
@@ -26,5 +27,22 @@ public:
         }
         
         return (e == -1 ? 0 : (e - s + 1));
+        */
+        
+        
+        //Method 2: using the istringstream
+        reverse(str.begin(), str.end());
+        istringstream iss(str);
+        
+        string ans;
+        if (iss >> ans)
+        {
+            return ans.size();
+        }
+        else
+        {
+            return 0;
+        }
+        
     }
 };

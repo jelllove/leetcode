@@ -13,7 +13,7 @@ public:
     ListNode* deleteDuplicates(ListNode* head) {
         
         //Method 1: using two pointer
-        
+        /*
         ListNode ret(INT_MIN);
         ListNode *tail = &ret;
         
@@ -38,5 +38,31 @@ public:
         tail->next = head;
         
         return ret.next;
+        */
+        
+        //Method 2: using the recursion
+        if (head == nullptr || head->next == nullptr)
+            return head;
+        
+        
+        bool flag = false;
+        
+        ListNode *tmpNext = head->next;
+        
+        while (tmpNext != nullptr && tmpNext->val == head->val)
+        {
+            flag = true;
+            tmpNext = tmpNext->next;
+        }
+        
+        if (flag)
+        {
+            return deleteDuplicates(tmpNext);
+        }
+        else
+        {
+            head->next = deleteDuplicates(tmpNext);
+            return head;
+        }
     }
 };

@@ -4,6 +4,7 @@ public:
     ListNode* deleteDuplicates(ListNode* head) {
         
         //Method 1: using the pointer to traverse
+        /*
         if (head == nullptr ||  head->next == nullptr)
             return head;
         
@@ -23,5 +24,19 @@ public:
         
         tail->next = nullptr;
         return ret.next;
+        */
+        
+        //Method 2: more quick way
+        ListNode *tmp = head;
+        
+        while (tmp != nullptr && tmp->next != nullptr)
+        {
+            if (tmp->val == tmp->next->val)
+                tmp->next = tmp->next->next;
+            else 
+                tmp = tmp->next;
+        }
+        
+        return head;
     }
 };

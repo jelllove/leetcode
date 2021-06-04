@@ -1,7 +1,37 @@
 class Solution {
 public:
+    
+    void helper(int i, int j, int m, int n, int &ans)
+    {
+        if (i >= m || j >= n)
+            return;
+        
+        if (i == (m -1) || j == (n - 1))
+        {
+            ++ans;
+            return;
+        }
+        
+        helper(i + 1, j, m, n, ans);
+        helper(i, j + 1, m, n, ans);
+        
+    }
+    
     int uniquePaths(int m, int n) {
-        //Method 1: dp
+        
+        //Method 1: using the recursion, the method is right, but timeout
+        /*
+        if (m <= 0 || n <= 0)
+            return 0;
+        
+        int ans = 0;
+        helper(0, 0, m, n, ans);
+        
+        return ans;
+        */
+        
+        //Method 2: dp
+    
         if (m <= 0 || n <= 0)
             return 0;
         
@@ -19,5 +49,6 @@ public:
         }
         
         return dp[m - 1][n - 1];
+        
     }
 };

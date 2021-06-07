@@ -1,10 +1,10 @@
 
 class Solution {
 private:
-    int row[9] = {0};//记录每一行上的
-    int col[9] = {0};
-    int block[9] = {0};
-    bool m_done = false;
+    int row[9] = {0};//记录每一行上的已经有的数字
+    int col[9] = {0};//记录每一列上的已经有的数字
+    int block[9] = {0};//记录每一块上的已经有的数字
+    bool m_done = false; //如果已经找到了方案，就不用再做了
 public:
     
     
@@ -13,7 +13,7 @@ public:
     {
         if (m_done)
             return;
-        
+        //判断如果当前的格子已经填了，就只要判断一下，是不是已经到结尾了
         if (board[i / 9][i % 9] != '.')
         {
             if (i == 80)
@@ -26,6 +26,7 @@ public:
         }
         else
         {
+            //如果还没有填过，就从1到9，一个个填过去试试
             for (int m = 1; m <= 9 && !m_done; ++m)
             {
                 if (row[i / 9] & (1 << m))
@@ -45,7 +46,7 @@ public:
                     return;
                 }
                 
-                
+                //填了之后要把位MARK上
                 row[i / 9] |= (1 << (board[i / 9][i % 9] - '0'));
                 col[i % 9] |= (1 << (board[i / 9][i % 9] - '0'));
                 block[((i/9) / 3)*3 + (i % 9) / 3] |= (1 << (board[i / 9][i % 9] - '0'));
@@ -54,7 +55,7 @@ public:
                 int x = i;
                 
                 
-                
+                //走到一个个格子
                 dfs(board, ++x);
                 
                 if (m_done)
@@ -62,14 +63,13 @@ public:
                     return;
                 }
                 
-                
+                //如果填了之后发现不行，那就把刚才填的取消
                 row[i / 9] &= ~(1 << (board[i / 9][i % 9] - '0'));
                 col[i % 9] &= ~(1 << (board[i / 9][i % 9] - '0'));
                 block[((i/9) / 3)*3 + (i % 9) / 3] &= ~(1 << (board[i / 9][i % 9] - '0'));
                 
-                
+                //然后再把数字设置成空
                 board[i / 9][i % 9] = '.';
-                
             }
         }
         

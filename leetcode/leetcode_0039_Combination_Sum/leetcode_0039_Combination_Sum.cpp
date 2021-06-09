@@ -35,7 +35,7 @@ public:
     vector<vector<int>> combinationSum(vector<int>& candidates, int target) {
         ans.clear();
         
-        if (candidates.size() == 0 || (candidates.size() == 1 && candidates[0] < target))
+        if (candidates.size() == 0 || (candidates.size() == 1 && candidates[0] > target))
         {
             return ans;
         }

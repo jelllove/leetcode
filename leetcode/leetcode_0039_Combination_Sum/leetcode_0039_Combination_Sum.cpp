@@ -5,29 +5,22 @@ private:
     
 public:
     
-    void dfs(vector<int>& candidates, int i, vector<int> tmp, int sum, int target)
+    void dfs(vector<int>& candidates, int i, vector<int> &tmp, int target, int n)
     {
-        if (i >= candidates.size())
+        if (i >= n || target < 0)
             return;
         
-        if (sum + candidates[i] > target)
-            return;
-        else if (sum + candidates[i] == target)
+        if (0 == target)
         {
-            tmp.push_back(candidates[i]);
             ans.push_back(tmp);
             return;
         }
         else
         {
             tmp.push_back(candidates[i]);
-            sum += candidates[i];
-            for (int k = i; k < candidates.size(); k++)
-            {
-                dfs(candidates, k, tmp, sum, target);
-            }
-            sum -= candidates[i];
+            dfs(candidates, i, tmp, target - candidates[i], n);
             tmp.pop_back();
+            dfs(candidates, i + 1, tmp, target, n);
         }
     }
     
@@ -40,11 +33,11 @@ public:
             return ans;
         }
         
+        
         sort(candidates.begin(), candidates.end());
         
         vector<int> tmp;
-        for (int i = 0; i < candidates.size(); ++i)
-            dfs(candidates, i, tmp, 0, target);
+        dfs(candidates, 0, tmp, target, candidates.size());
         
         return ans;
         

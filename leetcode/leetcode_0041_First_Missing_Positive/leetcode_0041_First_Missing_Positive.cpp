@@ -26,6 +26,7 @@ public:
         */
         
         //Method 2:  using the min heap
+        /*
         priority_queue<int, vector<int>, greater<int>> pq;
         for (auto &n : nums)
         {
@@ -53,7 +54,27 @@ public:
             pq.pop();
         }
         
-        
         return m + 1;
+        */
+        
+        //Method 3: using the histogram filling
+        int n = nums.size();
+        vector<bool> histogram(n, false);
+        
+        for (int i = 0; i < n; ++i)
+        {
+            if (nums[i] > 0 && nums[i] <= n)
+            {
+                histogram[nums[i] - 1] = true;
+            }
+        }
+        
+        for (int j = 0; j < n; ++j)
+        {
+            if (!histogram[j])
+                return j + 1;
+        }
+        
+        return n + 1;
     }
 };

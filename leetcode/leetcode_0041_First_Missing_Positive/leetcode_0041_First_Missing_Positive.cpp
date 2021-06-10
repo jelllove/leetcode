@@ -58,6 +58,7 @@ public:
         */
         
         //Method 3: using the histogram filling
+        /*
         int n = nums.size();
         vector<bool> histogram(n, false);
         
@@ -73,6 +74,29 @@ public:
         {
             if (!histogram[j])
                 return j + 1;
+        }
+        
+        return n + 1;
+        */
+        
+        //Method 4: using the swap method, but it looks, it is not so quickly
+        int n = nums.size();
+        int i = 0;
+        while (i < n)
+        {
+            if (nums[i] > 0 && nums[i] <= n && nums[i] != nums[nums[i] - 1])
+                swap(nums[i], nums[nums[i] - 1]);
+            else
+                ++i;
+        }
+        
+        i = 0;
+        while (i < n)
+        {
+            if (nums[i] != i + 1)
+                return i + 1;
+            else
+                ++i;
         }
         
         return n + 1;

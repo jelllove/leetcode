@@ -13,6 +13,7 @@ class Solution {
 public:
     
     //Method 1: using the recursion
+    /*
     int dfs(TreeNode* root, bool &failure)
     {
         if (failure || root == nullptr)
@@ -29,12 +30,37 @@ public:
         
         return max(l, r) + 1;
     }
+    */
+    
+    int getHeight(TreeNode *root)
+    {
+        if (root == nullptr)
+            return 0;
+        else
+            return max(getHeight(root->left), getHeight(root->right)) + 1;
+        
+    }
     
     bool isBalanced(TreeNode* root) {
         //Method 1: using the recursion
+        /*
         bool failure = false;
         dfs(root, failure);
         
         return !failure;
+        */
+        
+        //Method 2: is easy to understadning
+        if (root == nullptr)
+            return true;
+    
+        int l = getHeight(root->left);
+        int r = getHeight(root->right);
+        
+        if (abs(l -r) > 1)
+            return false;
+        
+        return isBalanced(root->left) && isBalanced(root->right);
+        
     }
 };

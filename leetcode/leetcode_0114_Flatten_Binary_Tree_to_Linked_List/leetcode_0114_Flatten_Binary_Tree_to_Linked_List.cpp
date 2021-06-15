@@ -11,10 +11,11 @@
  */
 class Solution {
 public:
-    
+    //Method 1
+    /*
     TreeNode* dfs(TreeNode* root)
     {
-        //Method 1
+        
         if (root == nullptr || (root->left == nullptr && root->right == nullptr))
             return root;
         
@@ -30,10 +31,29 @@ public:
         if (root->right != nullptr)
             return dfs(root->right);
         return root;
+        
     }
+    */
     
     void flatten(TreeNode* root) {
+        //Method 1:
+        /*
         dfs(root);
+        */
+        
+        //Method 2:
+        if (root != nullptr)
+        {
+            TreeNode *l = root->left;
+            TreeNode *r = root->right;
+            root->left = nullptr;
+            flatten(l);
+            flatten(r);
+            root->right = l;
+            TreeNode *cur = root;
+            while (cur->right != nullptr) cur = cur->right;
+            cur->right = r;
+        }
         
     }
 };

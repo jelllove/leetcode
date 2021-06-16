@@ -44,14 +44,24 @@ public:
         //Method 2:
         if (root != nullptr)
         {
+            //先记录下左右子树
             TreeNode *l = root->left;
             TreeNode *r = root->right;
+            
+            //然后让左边设置为空
             root->left = nullptr;
+            //再把左边捋直
             flatten(l);
+            //同时把右边捋直
             flatten(r);
+            //然后刚才光头的那个ROOT的右边指向刚才它的左边
             root->right = l;
+            
+            //然后找到刚才左边的最后一个结点
             TreeNode *cur = root;
             while (cur->right != nullptr) cur = cur->right;
+            
+            //让刚才的最后一个结点指向刚才右边的
             cur->right = r;
         }
         

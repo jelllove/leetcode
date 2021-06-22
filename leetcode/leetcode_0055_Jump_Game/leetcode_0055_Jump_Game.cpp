@@ -28,6 +28,7 @@ public:
         */
         
         //Method 2: using the dp, and optimized
+        /*
         int n = nums.size();
         vector<int> dp(n, 0);
         for (int i = 1; i < n; ++i)
@@ -38,6 +39,16 @@ public:
         }
         
         return true;
+        */
+        int reach = 0;
+        for (int i = 0; i < nums.size(); ++i)
+        {
+            if (i > reach || (reach >= nums.size() - 1))
+                break;
+            reach = max(reach, i + nums[i]);
+        }
+
+        return (reach >= nums.size() - 1);
         
     }
 };

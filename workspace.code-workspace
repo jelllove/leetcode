@@ -74,7 +74,8 @@
 			"functional": "cpp",
 			"*.tcc": "cpp",
 			"string_view": "cpp",
-			"mutex": "cpp"
+			"mutex": "cpp",
+			"bitset": "cpp"
 		}
 	}
 }

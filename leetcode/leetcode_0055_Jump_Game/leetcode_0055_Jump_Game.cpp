@@ -4,6 +4,7 @@ public:
         
         
         //Method 1: using the dp
+        /*
         //如果只有一个数，那就已经到达终点了
         if (nums.size() == 1)
             return true;
@@ -24,6 +25,19 @@ public:
         }
         
         return false;
+        */
+        
+        //Method 2: using the dp, and optimized
+        int n = nums.size();
+        vector<int> dp(n, 0);
+        for (int i = 1; i < n; ++i)
+        {
+            dp[i] = max(dp[i - 1], nums[i - 1]) - 1;
+            if (dp[i] < 0)
+                return false;
+        }
+        
+        return true;
         
     }
 };

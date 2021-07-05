@@ -1,10 +1,23 @@
 class Solution {
-
+private:
+    vector<int> merge(vector<int> &a, vector<int> &b)
+    {
+        if ((a[0] >= b[0] && a[0] <= b[1]) ||
+            (a[1] >= b[0] && a[1] <= b[1]) ||
+            (b[0] >= a[0] && b[0] <= a[1]) ||
+            (b[0] >= a[0] && b[1] <= a[1]))
+        {
+            return {min(a[0], b[0]), max(a[1], b[1])};
+        }
+        else
+            return {};
+    }
     
 public:
     vector<vector<int>> insert(vector<vector<int>>& intervals, vector<int>& newInterval) {
         
         //Method 1: traverse, this method is work, but low efficiency
+        /*
         if (newInterval.size() == 0)
             return intervals;
         if (intervals.size() == 0)
@@ -55,147 +68,39 @@ public:
         sort(ans.begin(), ans.end(), [](const vector<int> &a, const vector<int> &b){return a[0] < b[0];});
         return ans;
         
-        /*
-        
-        INDEX_STATUS s_status = IS_AFTER;
-        int s = -8;
-        
-        INDEX_STATUS e_status = IS_AFTER;
-        int e = -8;
-        
-        for (int i = 0; i < intervals.size() && (s == -8 || e == -8); ++i)
-        {
-            if (s == -8)
-            {
-                if (newInterval[0] >= intervals[i][0] && newInterval[0] <= intervals[i][1])
-                {
-                    s = i;
-                    s_status = IS_IN;
-                }
-                else if (newInterval[0] < intervals[i][0])
-                {
-                    s = i ;
-                    s_status = IS_BEFORE;
-                }
-            }
-            
-            if (e == -8)
-            {
-                if (newInterval[1] >= intervals[i][0] && newInterval[1] <= intervals[i][1])
-                {
-                    e = i;
-                    e_status = IS_IN;
-                }
-                else if (newInterval[1] < intervals[i][0])
-                {
-                    e = i;
-                    e_status = IS_BEFORE;
-                }
-            }
-            
-        }
-        
-        
-        if (e == s)
-            intervals.push_back(newInterval);
-        else
-        {
-            if (s_status == IS_IN)
-            newInterval[0] = min(newInterval[0], intervals[s][0]);
-        else if (s_status == IS_AFTER)
-            s = intervals.size() + 1;
-        
-        if (e_status == IS_IN)
-            newInterval[1] = max(newInterval[1], intervals[e][1]);
-        else if (e_status == IS_AFTER)
-            e = intervals.size() + 1;
-        
-        for (int k = e; k >= s; --k)
-        {
-            if (k >= 0 && k < intervals.size())
-                intervals.erase(intervals.begin() + k);
-        }
-        
-        intervals.push_back(newInterval);
-        }
-        
-        
-        
-        
-        sort(intervals.begin(), intervals.end(), [](const vector<int> &a, const vector<int> &b){return a[0] < b[0];});
-        
-        
-        return intervals;
         */
         
-        /*
-        int maxVal = INT_MIN;
+        //Method 2: using the merge method
+        if (newInterval.size() == 0)
+            return intervals;
+        if (intervals.size() == 0)
+            return vector<vector<int>>{{newInterval[0],newInterval[1]}};
         
-        for (auto &i : intervals)
-        {
-            maxVal = max(maxVal, i[i.size() - 1]);
-        }
+        //Add the new into the set
+        intervals.push_back(newInterval);
         
+        //sort
+        sort(intervals.begin(), intervals.end(), [](const vector<int> &a, const vector<int> &b){return a[0] < b[0];});
         
-        for (auto &i : newInterval)
-        {
-            maxVal = max(maxVal, i);
-        }
-        
-        if (maxVal == INT_MIN)
-        {
-            vector<vector<int>> ans;
-            ans.push_back(newInterval);
-            return ans;
-        }
-        
-        
-        vector<bool> data(maxVal + 1, false);
-        
-        for (auto &i : intervals)
-        {
-            for (int k = i.front(); k < i.back(); ++k)
-            {
-                data[k] = true;
-            }
-        }
-        
-        if ()
-        for (int k = newInterval.front(); k < newInterval.back(); ++k)
-        {
-            data[k] = true;
-        }
-        
-        bool start = false;
-        int num = -1;
-        
-        
-        
+        vector<int> current = intervals[0];
         vector<vector<int>> ans;
-        
-        for (int m = 0; m < data.size(); ++m)
+        for (int i = 1; i < intervals.size(); ++i)
         {
-            if (data[m])
+            vector<int> tmp = merge(current, intervals[i]);
+            if (tmp.size() == 0)
             {
-                if (!start)
-                {
-                    num = m;
-                    start = true;
-                }
+                ans.push_back(current);
+                current = intervals[i];
             }
             else
             {
-                if (start)
-                {
-                    start = false;
-                    ans.push_back(vector<int>{num, m});
-                    num = -1;
-                }
+                current = tmp;
             }
         }
         
-        return ans;
+        ans.push_back(current);
         
-        */
+        return ans;
+       
     }
 };

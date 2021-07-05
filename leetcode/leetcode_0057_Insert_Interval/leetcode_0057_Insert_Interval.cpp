@@ -1,13 +1,61 @@
 class Solution {
-enum INDEX_STATUS
-{
-    IS_IN = 0,
-    IS_BEFORE = 1,
-    IS_AFTER = 2
-};
+
     
 public:
     vector<vector<int>> insert(vector<vector<int>>& intervals, vector<int>& newInterval) {
+        
+        //Method 1: traverse, this method is work, but low efficiency
+        if (newInterval.size() == 0)
+            return intervals;
+        if (intervals.size() == 0)
+            return vector<vector<int>>{{newInterval[0],newInterval[1]}};
+        
+        
+        vector<vector<int>> ans;
+        bool inserted = false;
+        
+        for (int i = 0; i < intervals.size(); ++i)
+        {
+            if (inserted)
+            {
+                ans.push_back(intervals[i]);
+                continue;
+            }
+            
+            
+            if (intervals[i][0] > newInterval[1])
+            {
+                ans.push_back(newInterval);
+                ans.push_back(intervals[i]);
+                inserted = true;
+            }
+            else if (intervals[i][1] < newInterval[0])
+            {
+                ans.push_back(intervals[i]);
+            }
+            else 
+            {
+                if (intervals[i][0] <= newInterval[0] && newInterval[0] <= intervals[i][1])
+                {
+                    newInterval[0] = intervals[i][0];
+                }
+                
+                
+                if (intervals[i][0] <= newInterval[1] && newInterval[1] <= intervals[i][1])
+                {
+                    newInterval[1] = intervals[i][1];
+                }
+            }
+        }
+        
+        if (!inserted)
+            ans.push_back(newInterval);
+        
+        
+        sort(ans.begin(), ans.end(), [](const vector<int> &a, const vector<int> &b){return a[0] < b[0];});
+        return ans;
+        
+        /*
         
         INDEX_STATUS s_status = IS_AFTER;
         int s = -8;
@@ -78,6 +126,7 @@ public:
         
         
         return intervals;
+        */
         
         /*
         int maxVal = INT_MIN;

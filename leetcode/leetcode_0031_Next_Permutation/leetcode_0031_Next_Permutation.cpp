@@ -1,9 +1,11 @@
 class Solution {
 public:
     void nextPermutation(vector<int>& nums) {
+
         if (nums.size() <= 1)
             return;
         
+
         int n = nums.size();
         int i = n - 2;
         

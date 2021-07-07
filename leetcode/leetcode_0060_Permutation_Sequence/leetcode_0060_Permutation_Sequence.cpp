@@ -50,7 +50,7 @@ public:
             data[i - 1] = i;
         }
         
-        for (int i = 0; i < reset - 1; ++i)
+        for (int i = 0; i < reset; ++i)
         {
             nextPermutation(data);
         }

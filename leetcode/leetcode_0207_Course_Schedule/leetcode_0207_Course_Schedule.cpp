@@ -157,7 +157,7 @@ public:
         */
         
         //Method 4: DFS, not good spped
-        
+        /*
         vector<int> footprint(numCourses, 0); //0 -- Not visited, 1 -- Visiting,  2 -- Finished
         
         vector<set<int>> adjOut(numCourses, set<int>{});
@@ -178,12 +178,61 @@ public:
             }
         }
         return true;
+        */
         
+        
+        vector<vector<int>> adj(numCourses, vector<int>{});
+        
+        vector<bool> notVisited(numCourses, true);
+        vector<bool> isVisiting(numCourses, false);
+        vector<bool> hasVisited(numCourses, false);
+        
+    
+        for (auto &p : prerequisites)
+        {
+            adj[p[1]].push_back(p[0]);//建立p[0]和p[1]的主从关系
+        }
+        
+        
+        for (int i = 0; i < numCourses; ++i)
+        {
+            if (notVisited[i])
+            {
+                if (!helper(i, notVisited, isVisiting, hasVisited, adj))
+                    return false;
+            }
+        }
+        return true;
         
         
         
     }
     
+    bool helper(int courseID, vector<bool> &notVisited, vector<bool> &isVisiting, vector<bool> &hasVisited, vector<vector<int>> &adj)
+    {
+        notVisited[courseID] = false;
+        isVisiting[courseID] = true;
+        
+        for (auto &a : adj[courseID])
+        {
+            if (hasVisited[a])
+                continue;
+            if (isVisiting[a])
+                return false;
+            
+            if (!helper(a, notVisited, isVisiting, hasVisited, adj))
+                return false;
+        }
+        
+        isVisiting[courseID] = false;
+        hasVisited[courseID] = true;
+        
+        return true;
+    }
+    
+    
+    //Method 4
+    /*
     bool helper(int courseID, vector<int> footprint, vector<set<int>> &adjOut, vector<set<int>> &adjIn)
     {
         
@@ -216,4 +265,5 @@ public:
         
         return true;
     }
+    */
 };

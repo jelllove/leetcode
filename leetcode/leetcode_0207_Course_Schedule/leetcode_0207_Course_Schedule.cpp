@@ -114,6 +114,7 @@ public:
         */
         
         //Method 3: BFS + optimized 2
+        /*
         vector<vector<int>> data(numCourses, vector<int>{});//代表了一个index是另外的index的输入
         vector<int> indegree(numCourses, 0);
         
@@ -153,7 +154,66 @@ public:
         
         
         return (finishCount == numCourses);
+        */
         
+        //Method 4: DFS, not good spped
+        
+        vector<int> footprint(numCourses, 0); //0 -- Not visited, 1 -- Visiting,  2 -- Finished
+        
+        vector<set<int>> adjOut(numCourses, set<int>{});
+        vector<set<int>> adjIn(numCourses, set<int>{});
+        for (auto &p : prerequisites)
+        {
+            adjOut[p[1]].insert(p[0]);//建立p[0]和p[1]的主从关系
+            adjIn[p[0]].insert(p[1]);//建立p[0]和p[1]的主从关系
+        }
+        
+        
+        for (int i = 0; i < numCourses; ++i)
+        {
+            if (footprint[i] == 0)
+            {
+                if (!helper(i, footprint, adjOut, adjIn))
+                    return false;
+            }
+        }
+        return true;
+        
+        
+        
+        
+    }
     
+    bool helper(int courseID, vector<int> footprint, vector<set<int>> &adjOut, vector<set<int>> &adjIn)
+    {
+        
+        if (footprint[courseID] == 2)
+            return true;
+        else if (footprint[courseID] == 1)
+            return false;
+        
+        
+        footprint[courseID] = 1;
+        
+        
+        for (auto &a : adjOut[courseID])
+        {
+            if (footprint[a] == 2)
+                continue;
+            else if (footprint[a] == 1)
+                return false;
+            else if (!helper(a, footprint, adjOut, adjIn))
+                return false;
+        }
+        
+        
+        footprint[courseID] = 2;
+        
+        for (auto &a : adjIn[courseID])
+        {
+            adjOut[a].erase(courseID);
+        }
+        
+        return true;
     }
 };

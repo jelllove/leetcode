@@ -1,7 +1,29 @@
 class Solution {
 public:
     string addBinary(string a, string b) {
-        //using the traverse
+        
+        //Method 1: using the bit set, it shall work, but throw overflow
+        /*
+        bitset<1001> bt1(a);
+        bitset<1001> bt2(b);
+        unsigned long long l = bt1.to_ullong() + bt2.to_ullong();
+        
+        string ret = "";
+        
+        while (l != 0)
+        {
+            if (l & 0x1)
+                ret = "1"s + ret;
+            else
+                ret = "0"s + ret;
+            
+            l >>= 1;
+        }
+        
+        return ret == "" ? "0" : ret;
+        */
+        
+        //Method 2: using the string to add the string
         
         int i = a.size() - 1;
         int j = b.size() - 1;
@@ -31,6 +53,7 @@ public:
         }
         
         return ans;
+        
         
     }
 };

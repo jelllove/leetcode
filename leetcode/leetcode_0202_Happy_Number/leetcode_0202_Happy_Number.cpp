@@ -7,7 +7,7 @@ public:
         //Method 1: using the brute force
         unordered_set<int> dupNum;//Store the duplicated num, in case the loop
         
-        while (n != 1)
+        while (n >= 10)
         {
             int sum = 0;
             while (n > 0)
@@ -24,7 +24,6 @@ public:
             n = sum;
         }
         
-        return true;
-        
+        return (n == 1 || n == 7);
     }
 };

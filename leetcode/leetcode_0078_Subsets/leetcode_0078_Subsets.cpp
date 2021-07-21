@@ -1,5 +1,3 @@
-#include "../include/public.h"
-
 class Solution {
 public:
     //Method 1, using the additional insert
@@ -29,6 +27,7 @@ public:
     */
     
     //Method 2, using the bitset
+    /*
     vector<vector<int>> subsets(vector<int>& nums)
     {
         vector<vector<int>> ret;
@@ -53,5 +52,31 @@ public:
         
         return ret;
     }
+    */
     
+    //Method 3: using the dfs
+    
+    void helper(int idx, vector<int>& nums, vector<int>& sub_set, vector<vector<int>> &ans)
+    {
+        
+        ans.push_back(sub_set);
+        
+        for (int i = idx; i < nums.size(); ++i)
+        {
+            sub_set.push_back(nums[i]);
+            helper(i + 1, nums, sub_set, ans);
+            sub_set.pop_back();
+        }
+    }
+    
+    vector<vector<int>> subsets(vector<int>& nums)
+    {
+        
+        vector<vector<int>> ans;
+        vector<int> sub_set;
+        
+        helper(0, nums, sub_set, ans);
+        
+        return ans;
+    }
 };

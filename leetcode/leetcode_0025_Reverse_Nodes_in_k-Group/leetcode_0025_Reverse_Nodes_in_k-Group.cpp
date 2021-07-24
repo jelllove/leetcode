@@ -68,6 +68,7 @@ public:
         */
         
         //Method 2: using the simple pointor
+        /*
         if (k <= 1 || head == nullptr || head->next == nullptr)
             return head;
         
@@ -97,5 +98,31 @@ public:
         }
         
         return tmp.next;
+        */
+        
+        //Method 3: using the recursion method 
+        if (k <= 1 || head == nullptr || head->next == nullptr)
+            return head;
+        
+        ListNode *end = head;
+        
+        int count = 1;
+        while (end->next != nullptr && count < k)
+        {
+            end = end->next;
+            ++count;
+        }
+        
+        if (count == k)
+        {
+            ListNode *tail = end->next;
+            reverseList(head, end);
+            head->next = reverseKGroup(tail, k);
+            return end;
+        }
+        else
+        {
+            return head;
+        }
     }
 };

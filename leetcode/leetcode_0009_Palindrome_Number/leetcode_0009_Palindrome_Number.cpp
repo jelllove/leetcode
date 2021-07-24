@@ -84,7 +84,7 @@ public:
         */
         
         
-        //Method 5// Reflect the int, and compare them
+        //Method 5// reverse the int, and compare them
         //-------------------------------------------------------------------------------
         int m = x;
         int y = 0;

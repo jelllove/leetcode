@@ -33,6 +33,7 @@ public:
         */
         
         //Method 2: binary search
+        /*
         int l = 0;
         int r = nums.size() - 1;
         
@@ -72,5 +73,26 @@ public:
         }
         
         return vector<int>{s, e};
+        */
+        
+        //Method 3: using the STL functionality
+        auto res = find(nums.begin(), nums.end(), target);
+        if (res == nums.end())
+        {
+            return {-1, -1};
+        }
+        else
+        {
+            int firstPos = res - nums.begin();
+            int lastPos = firstPos;
+            while (lastPos < nums.size() && nums[lastPos] == target)
+            {
+                ++lastPos;
+            }
+            
+            return {firstPos, lastPos != firstPos ? lastPos - 1 : lastPos};
+        }
+            
+        
     }
 };

@@ -80,6 +80,7 @@ public:
         */
         
         //Method 4: using the swap method, but it looks, it is not so quickly
+        /*
         int n = nums.size();
         int i = 0;
         while (i < n)
@@ -100,5 +101,34 @@ public:
         }
         
         return n + 1;
+        */
+        /*
+        sort(nums.begin(), nums.end());
+        int f = 1;
+        
+        for (int i = 0; i < nums.size(); ++i)
+        {
+            if (nums[i] <= 0)
+                continue;
+            else if (i > 0 && nums[i] == nums[i - 1])
+                continue;
+            else if (nums[i] == f)
+                ++f;
+            else
+                return f;
+        }
+        
+        return f;
+        */
+        
+        unordered_set<int> set(nums.begin(), nums.end());
+        int i;
+        for (i = 1; i <= nums.size(); ++i)
+        {
+            if (set.count(i) == 0)
+                return i;
+        }
+        
+        return i;
     }
 };

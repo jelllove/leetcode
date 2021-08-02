@@ -22,6 +22,9 @@
 #include <stdlib.h>
 #include <string.h>
 #include <memory>
+#include <thread>
+#include <mutex>
+#include <atomic>
 
 using namespace std;
 

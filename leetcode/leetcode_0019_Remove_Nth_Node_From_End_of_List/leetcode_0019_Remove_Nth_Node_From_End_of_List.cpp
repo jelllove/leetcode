@@ -11,6 +11,9 @@
 class Solution {
 public:
     ListNode* removeNthFromEnd(ListNode* head, int n) {
+
+        //Method 1:
+        /*
         ListNode *tail = head;
         
         //先用一个tail 指针往后移N步
@@ -49,5 +52,38 @@ public:
         }
         
         return head;
+        */
+
+        //Method 2: optimized method
+        ListNode *prev = head; //保存原来的那个头指针
+        ListNode *fast = head; //找到一个fast指针用来最后指向最后一个点
+        
+        //让FAST一直往前走N步
+        while (n > 0 && fast != nullptr)
+        {
+            fast = fast->next;
+            --n;
+        }
+        
+        //然后FAST和HEAD一起走
+        while (fast != nullptr && fast->next != nullptr)
+        {
+            fast = fast->next;
+            head = head->next;
+        }
+        
+        //如果FAST最后是空的，那只有一种情况，就是要把HEAD给删除掉
+        if (fast == nullptr)
+        {
+            prev = prev->next;
+            
+            return prev;
+        }
+        else
+        {
+            //如果不是的话，就把HEAD的下一个给去掉就可以了
+            head->next = head->next->next;
+            return prev;
+        }
     }
 };

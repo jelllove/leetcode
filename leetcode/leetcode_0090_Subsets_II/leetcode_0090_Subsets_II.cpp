@@ -2,6 +2,8 @@ class Solution {
 public:
     vector<vector<int>> subsetsWithDup(vector<int>& nums) {
         
+        //Method 1: using the copy way
+        /*
         if (nums.size() == 0)
             return {};
         
@@ -32,5 +34,32 @@ public:
         }
         
         return ret;
+        */
+        
+        //Method 2: using the recursion
+        
+        sort(nums.begin(), nums.end());
+        vector<vector<int>> ans;
+        vector<int> subset;
+        helper(nums, 0, subset, ans);
+        
+        return ans;
+            
     }
+    
+    void helper(vector<int>& nums, int idx, vector<int> &subset, vector<vector<int>> &ans)
+    {
+        ans.push_back(subset);
+        
+        for (int i = idx; i < nums.size(); ++i)
+        {
+            if (i > idx && nums[i] == nums[i - 1])
+                continue;
+            
+            subset.push_back(nums[i]);
+            helper(nums, i + 1, subset, ans);
+            subset.pop_back();
+        }
+    }
+    
 };

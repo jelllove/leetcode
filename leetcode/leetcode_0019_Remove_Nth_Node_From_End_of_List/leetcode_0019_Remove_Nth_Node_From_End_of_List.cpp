@@ -85,5 +85,5 @@ public:
             head->next = head->next->next;
             return prev;
         }
-    }
+    }   
 };

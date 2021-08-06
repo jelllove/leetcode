@@ -10,40 +10,30 @@ class Solution {
 public:
     ListNode *detectCycle(ListNode *head) {
         
-        if (head == NULL)
-            return NULL;
+        if (head == nullptr || head->next == nullptr)
+            return nullptr;
         
-        ListNode *one = head;
-        ListNode *two = head;
+        ListNode *fast = head;
+        ListNode *slow = head;
         
-        while (true)
+        while (fast != nullptr && fast->next != nullptr && slow != nullptr)
         {
-            one = one->next;
-            if (one == NULL)
-                return NULL;
+            fast = fast->next->next;
+            slow = slow->next;
             
-            
-            two = two->next;
-            if (two == NULL)
-                return NULL;
-            
-            two = two->next;
-            if (two == NULL)
-                return NULL;
-            
-            if (one == two)
+            if (fast == slow)
             {
-                break;
+                fast = head;
+                while (slow != fast)
+                {
+                    slow = slow->next;
+                    fast = fast->next;
+                }
+                
+                return slow;
             }
         }
         
-        two = head;
-        while (one != two)
-        {
-            one = one->next;
-            two = two->next;
-        }
-            
-        return one;
+        return nullptr;
     }
 };

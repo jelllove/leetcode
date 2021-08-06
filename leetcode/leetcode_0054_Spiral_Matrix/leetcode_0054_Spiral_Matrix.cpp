@@ -70,74 +70,51 @@ public:
         //Method B: using the boundary to control the item traverse
         //Better and quick solution
         
-        vector<int> ans;
-        
         if (matrix.size() == 0 || matrix[0].size() == 0)
-            return ans;
+            return {};
+        
         
         int top = 0;
-        int right = matrix[0].size() - 1;
-        int left = 0;
         int bottom = matrix.size() - 1;
+        int left = 0;
+        int right = matrix[0].size() - 1;
         
-        int i = 0;
-        
+        vector<int> ans(matrix.size() * matrix[0].size(), 0);
+        int idx = 0;
+        int i;
         while (left <= right && top <= bottom)
         {
+            if (left == right)
+            {
+                for (i = top; i <= bottom; ++i)
+                    ans[idx++] = matrix[i][left];
+                break;
+            }
             
             if (top == bottom)
             {
-                //从左到右的读
-                for (i = left; i <= right; ++i)
-                {
-                    ans.push_back(matrix[top][i]);
-                }
+                for (i = left; i<= right; ++i)
+                    ans[idx++] = matrix[top][i];
                 break;
             }
-            else if (left == right)
-            {
-                //从上到下的读
-                for (i = top; i <= bottom; ++i)
-                {
-                    ans.push_back(matrix[i][right]);
-                }
-                break;
-            }
-            else
-            {
-                //从左到右的读
-                for (i = left; i < right; ++i)
-                {
-                    ans.push_back(matrix[top][i]);
-                }
             
-                //从上到下的读
-                for (i = top; i < bottom; ++i)
-                {
-                    ans.push_back(matrix[i][right]);
-                }
+            for (i = left; i < right; ++i)
+                ans[idx++] = matrix[top][i];
             
-                //从右到左的读
-                for (i = right; i > left; --i)
-                {
-                    ans.push_back(matrix[bottom][i]);
-                }
+            for (i = top; i < bottom; ++i)
+                ans[idx++] = matrix[i][right];
             
+            for (i = right; i > left; --i)
+                ans[idx++] = matrix[bottom][i];
             
-                //从上到下的读
-                for (i = bottom; i > top; --i)
-                {
-                    ans.push_back(matrix[i][left]);
-                }
-            }
+            for (i = bottom; i > top; --i)
+                ans[idx++] = matrix[i][left];
             
-            
-            ++top;
-            --right;
             ++left;
+            --right;
+            ++top;
             --bottom;
         }
-       
         
         return ans;
     }

@@ -141,3 +141,82 @@ public:
     }
 };
 */
+
+class Solution {
+public:
+    
+    vector<vector<int>> direction = {
+        {0, 1},
+        {0, -1},
+        {1, 0},
+        {-1, 0}
+    };
+    
+    
+    bool seekWord(vector<vector<char>>& board, int i, int j, vector<vector<bool>> &visited, string &searchWord, int index)
+    {
+        if (i < 0 || j < 0 || i >= board.size() || j >= board[0].size())
+            return false;
+        
+        if (index >= searchWord.size())
+            return false;
+        
+        if (visited[i][j])
+            return false;
+        
+        if (board[i][j] == searchWord[index])
+        {
+            if (index == searchWord.size() - 1)
+                return true;
+            
+            visited[i][j] = true;
+            
+            for (auto &direct : direction)
+            {
+                if (seekWord(board, i + direct[0], j + direct[1], visited, searchWord, index + 1))
+                {   
+                    return true;
+                }
+                
+            }
+            
+            visited[i][j] = false;
+            
+        }
+        return false;
+        
+    }
+    
+    vector<string> findWords(vector<vector<char>>& board, vector<string>& words) {
+        
+        vector<string> res;
+        
+        vector<string> tmpWords = words;
+        
+        if (board.size() == 0 || board[0].size() == 0 || words.size() == 0)
+            return res;
+        
+        for (int i = 0; i < board.size(); i++)
+        {
+            for (int j = 0; j < board[0].size(); j++)
+            {
+                
+                
+                for (int m = tmpWords.size() - 1; m >= 0; m--)
+                {
+                    vector<vector<bool>> visited(board.size(), vector<bool>(board[0].size(), false));
+                    
+                    if (seekWord(board, i, j, visited, tmpWords[m], 0))
+                    {
+                        res.push_back(tmpWords[m]);
+                        tmpWords.erase(tmpWords.begin() + m);
+                    }
+                }
+            }
+        }
+        
+        
+        return res;
+        
+    }
+};

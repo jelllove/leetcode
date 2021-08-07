@@ -64,6 +64,7 @@ public:
         */
     
         //Method 3: using two pointer
+        /*
         int total = nums1.size() + nums2.size();  //总的个数
         int MedianIndex = 0;//中间的那个值的位置
         int count = 1;
@@ -132,6 +133,50 @@ public:
         }
         
         return val / double(count);
+        */
+        
+        int n1 = nums1.size();
+        int n2 = nums2.size();
+        
+        int medianCount = 1;
+        int medianIndex = (n1 + n2) /  2;
+        if (!((n1 + n2) & 0x1))
+        {
+            medianCount = 2;
+            --medianIndex;
+        }
+        
+        int idx1 = 0;
+        int idx2 = 0;
+        int index = 0;
+        int sum = 0;
+        
+        while (idx1 < n1 || idx2 < n2)
+        {
+            int tmp = 0;
+            
+            if (idx1 == n1)
+                tmp = nums2[idx2++];
+            else if (idx2 == n2)
+                tmp = nums1[idx1++];
+            else if (nums1[idx1] < nums2[idx2])
+                tmp = nums1[idx1++];
+            else
+                tmp = nums2[idx2++];
+            
+            if (index >= medianIndex)
+            {
+                if (index <= medianIndex + medianCount - 1)
+                    sum += tmp;
+                else
+                    break;
+            }
+            ++index;
+        }
+        
+        return (double)sum / double(medianCount);
+            
+        
         
         
     }

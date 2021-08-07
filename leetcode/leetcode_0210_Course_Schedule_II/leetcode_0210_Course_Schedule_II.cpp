@@ -1,24 +1,8 @@
 class Solution {
 
-private:
-   
-    
-private:
-    
-    vector<int> generateOrder(stack<int> &st)
-    {
-        vector<int> ret;
-        while (!st.empty())
-        {
-            ret.push_back(st.top());
-            st.pop();
-        }
-        
-        return ret;
-    }
 public:
     
-    bool helper(int courseID, vector<vector<int>> &adj, vector<bool> &noVisited, vector<bool> &isVisiting, vector<bool> &hasDone, stack<int> &stFinish)
+    bool helper(int courseID, vector<vector<int>> &adj, vector<bool> &noVisited, vector<bool> &isVisiting, vector<bool> &hasDone, vector<int> &finishOrder)
     {
         noVisited[courseID] = false;
         isVisiting[courseID] = true;
@@ -30,20 +14,20 @@ public:
             if (isVisiting[a])
                 return false;
             
-            if (!helper(a, adj, noVisited, isVisiting, hasDone, stFinish))
+            if (!helper(a, adj, noVisited, isVisiting, hasDone, finishOrder))
                 return false;
         }
     
         isVisiting[courseID] = false;
         hasDone[courseID] = true;
-        stFinish.push(courseID);
+        finishOrder.push_back(courseID);
         
         return true;
     }
     
     vector<int> findOrder(int n, vector<vector<int>>& p) {
         
-        stack<int> finishOrder;//使用一个stack来存放一个个课程完成的顺序
+        vector<int> finishOrder;//使用一个stack来存放一个个课程完成的顺序
         vector<vector<int>> adj(n, vector<int>{});
         
         vector<bool> noVisited(n, true);
@@ -70,8 +54,9 @@ public:
             
         }
         
+        reverse(finishOrder.begin(), finishOrder.end());
         //最后把stack中的信息反转一下，当然也可以使用vector
-        return generateOrder(finishOrder);
+        return finishOrder;
         
     }
 };

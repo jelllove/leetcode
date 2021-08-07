@@ -1,5 +1,17 @@
+//Method 2:
+auto wordCMP = [](const pair<string, int> &a, const pair<string, int> &b)
+    {
+        if (a.second > b.second)
+            return true;
+        else if (a.second == b.second)
+            return a.first < b.first;
+        else
+            return false;
+    };
+
 class Solution {
 
+/*
 struct wordCMP
 {
     bool operator () (const pair<string, int> &a, const pair<string, int> &b)
@@ -12,10 +24,13 @@ struct wordCMP
             return false;
     }
 };
+*/
+
+    
 
 public:
     vector<string> topKFrequent(vector<string>& words, int k) {
-        
+        /*
         unordered_map<string, int> hash;
         
         for (auto &str : words)
@@ -53,6 +68,24 @@ public:
             pq.pop();
         }
         
+        return ans;
+        */
+        
+        //Method 2: using the lambda
+        unordered_map<string, int> hash;
+        
+        for (auto &str : words)
+        {
+            hash[str]++;
+        }
+        vector<pair<string, int>> myList(hash.begin(), hash.end());
+        
+        sort(myList.begin(), myList.end(), wordCMP);
+        
+        
+        vector<string> ans(k, "");
+        for (int i = 0; i < k; ++i)
+            ans[i] = myList[i].first;
         return ans;
     }
 };

@@ -12,40 +12,34 @@
 class Solution {
 public:
     vector<vector<int>> levelOrder(TreeNode* root) {
-        vector<vector<int>> ans;
-        
         if (root == nullptr)
-            return ans;
-        
+            return {};
         
         queue<TreeNode *> q;
         q.push(root);
         
-        int n = 0;
+        vector<vector<int>> ans;
+            
         while (!q.empty())
         {
-            //这里进行pop的时候，只pop出当前的N个，这样的话，就相当于只pop了一层，其实就是一个BFS的算法
-            n = q.size();
-            
-            vector<int> tmpList;
-            
-            while (n > 0)
+            int n = q.size();
+            vector<int> subSet;
+            for (int i = 0; i < n; ++i)
             {
-                TreeNode *node = q.front();
+                TreeNode *topNode = q.front();
                 q.pop();
+                subSet.push_back(topNode->val);
                 
-                tmpList.push_back(node->val);
-                if (node->left != nullptr)
-                    q.push(node->left);
-                if (node->right != nullptr)
-                    q.push(node->right);
-                --n;
+                if (topNode->left != nullptr)
+                    q.push(topNode->left);
+                
+                if (topNode->right != nullptr)
+                    q.push(topNode->right);
             }
             
-            ans.push_back(tmpList);
+            ans.push_back(subSet);
         }
         
         return ans;
-        
     }
 };

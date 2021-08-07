@@ -84,7 +84,7 @@ public:
         {
             if (countSymbol(IP, ':') != 7)
                 return "Neither";
-            
+
             parseString(IP, ":", ans);
             if (ans.size() != 8)
                 return "Neither";

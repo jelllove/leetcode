@@ -68,7 +68,8 @@ private:
 public:
     int findCircleNum(vector<vector<int>>& isConnected) {
         
-        
+        //Method 1: union find
+        /*
         if (isConnected.size() == 0 || isConnected[0].size() == 0)
             return 0;
         
@@ -93,5 +94,36 @@ public:
         }
         
         return sum;
+        */
+        
+        
+        //Method 2: DFS
+        int n = isConnected.size();
+        if (n <= 1) return n;
+        vector<bool> visited(n, false);
+        
+        int sum = 0;
+        for (int i = 0; i < n; ++i)
+        {
+            if (!visited[i])
+            {
+                ++sum;
+                dfs(isConnected, i, visited);
+            }
+        }
+        
+        return sum;
     }
+    
+    void dfs(vector<vector<int>>& isConnected, int idx, vector<bool> &visited)
+        {
+            visited[idx] = true;
+            for (int j = 0; j < isConnected.size(); ++j)
+            {
+                if (j != idx && isConnected[idx][j] && !visited[j])
+                {
+                    dfs(isConnected, j, visited);
+                }
+            }
+        }
 };

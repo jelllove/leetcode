@@ -13,23 +13,6 @@ public:
         Resize(num);
     }
     
-    void Union(int src, int dst)
-    {
-        if (src >= 0 && src < _union.size() &&
-            dst >= 0 && dst < _union.size())
-        {
-            while (src != _union[src])
-                src = _union[src];
-            
-            
-            while (dst != _union[dst])
-                dst = _union[dst];
-            
-            _union[src] = dst;
-        }
-            
-    }
-    
     int Find(int target)
     {
         if (target < 0 || target >= _union.size())
@@ -41,6 +24,27 @@ public:
         
         return target;
     }
+    
+    void Union(int src, int dst)
+    {
+        if (src >= 0 && src < _union.size() &&
+            dst >= 0 && dst < _union.size())
+        {
+            src = Find(src);
+            dst = Find(dst);
+            /*
+            while (src != _union[src])
+                src = _union[src];
+            
+            
+            while (dst != _union[dst])
+                dst = _union[dst];
+            */
+            _union[src] = dst;
+        }
+            
+    }
+    
     
     void Clear()
     {

@@ -85,35 +85,33 @@ public:
 
 
 //Using the long long as the solution
+//因为是按顺序去移
 class Solution {
 public:
-    int reverse(int x) {
-        long long s = x;
-        int symbol = 1;
-        if (s < 0)
-        {
-            s = -s;
-            symbol = -1;
-        }
+    string removeKdigits(string num, int k) {
+        if (k <= 0)
+            return num;
         
+        string ans;
         
-        int ans = 0;
-        while (s > 0)
+        for (auto &c : num)
         {
-            int n = s % 10;
-            s /= 10;
+            while (k > 0 and 
+                   ans.size() != 0 and
+                   c < ans.back()
+                  )
+            {
+                ans.pop_back();
+                --k;
+            }
             
-            if ((INT_MAX / 10 < ans) || ((INT_MAX / 10 == ans) && (INT_MAX % 10 <= n)))
-            {
-                return 0;
-            }
-            else
-            {
-                ans *= 10;
-                ans += n;
-            }
+            ans.push_back(c);
         }
         
-        return symbol == -1 ? -ans : ans;
+        while (k > 0 and ans.size() != 0 and ans.front() == '0')
+            ans = ans.substr(1, ans.size() - 1);
+        
+        return ans;
+            
     }
 };

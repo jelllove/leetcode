@@ -63,7 +63,46 @@ public:
     }
 };
 
-int main()
-{
-
-}
+//Solution 2, the best, binary search
+class Solution {
+public:
+    int search(vector<int>& nums, int target) {
+        
+        if (nums.size() == 0)
+            return -1;
+        
+        int l = 0;
+        int r = nums.size() - 1;
+        
+        while (l <= r)
+        {
+            int m = ((r - l) >> 1) + l;
+            
+            if (nums[m] == target)
+                return m;
+            else if (nums[m] > nums[l])
+            {
+                if (nums[l] <= target and target < nums[m])
+                    r = m - 1;
+                else
+                    l = m + 1;
+            }
+            else if (nums[m] < nums[r])
+            {
+                if (nums[m] < target and target <= nums[r])
+                    l = m + 1;
+                else
+                    r = m - 1;
+            }
+            else
+            {
+                if (nums[l] == nums[m])
+                    ++l;
+                if (nums[r] == nums[m])
+                    --r;
+            }
+        }
+        
+        return -1;
+    }
+};

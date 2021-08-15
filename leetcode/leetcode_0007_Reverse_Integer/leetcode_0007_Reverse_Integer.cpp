@@ -82,3 +82,38 @@ public:
         return ans * symbol;
     }
 };
+
+
+//Using the long long as the solution
+class Solution {
+public:
+    int reverse(int x) {
+        long long s = x;
+        int symbol = 1;
+        if (s < 0)
+        {
+            s = -s;
+            symbol = -1;
+        }
+        
+        
+        int ans = 0;
+        while (s > 0)
+        {
+            int n = s % 10;
+            s /= 10;
+            
+            if ((INT_MAX / 10 < ans) || ((INT_MAX / 10 == ans) && (INT_MAX % 10 <= n)))
+            {
+                return 0;
+            }
+            else
+            {
+                ans *= 10;
+                ans += n;
+            }
+        }
+        
+        return symbol == -1 ? -ans : ans;
+    }
+};

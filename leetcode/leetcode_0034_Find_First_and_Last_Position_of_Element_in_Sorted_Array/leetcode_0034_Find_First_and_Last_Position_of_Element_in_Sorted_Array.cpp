@@ -96,3 +96,57 @@ public:
         
     }
 };
+
+
+//Using the binary search
+class Solution {
+public:
+    vector<int> searchRange(vector<int>& nums, int target) {
+        
+        int leftIndex = -1;
+        int rightIndex = -1;
+        
+        int l = 0;
+        int r = nums.size() - 1;
+        
+        //Find the left index
+        while (l <= r)
+        {
+            int m = ((r - l) >> 1) + l;
+            if (nums[m] == target)
+            {
+                leftIndex = m;
+                r = m - 1;
+            }
+            else if (nums[m] < target)
+                l = m + 1;
+            else
+                r = m - 1;
+        }
+        
+        if (leftIndex == -1)
+        {
+            return {-1, -1};
+        }
+
+        
+        //Find the right index
+        r = nums.size() - 1;
+        while (l <= r)
+        {
+            int m = ((r - l) >> 1) + l;
+            if (nums[m] == target)
+            {
+                rightIndex = m;
+                l = m + 1;
+            }
+            else if (nums[m] < target)
+                l = m + 1;
+            else
+                r = m - 1;
+        }
+        
+        return {leftIndex, rightIndex};
+        
+    }
+};

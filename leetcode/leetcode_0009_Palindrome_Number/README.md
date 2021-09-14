@@ -1,8 +1,6 @@
 
 
-
-
-题目比较简单，就不写手抄了
+![subject](./subject.png)
 
 这几个方法中使用string的比较是最快的，估计是string使用了一些类似memcmp的方法吧，要不然不应该会这么快
 

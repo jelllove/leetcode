@@ -1,53 +1,68 @@
 #include "include/public.h"
 
-class Solution {
-public:
-    
-    bool splitString(string &str, string declime, vector<string> &res)
+void helper(const char *fileName)
+{
+
+    unordered_map<string, int> hash;
+
+    if (fileName == nullptr)
     {
-        char *p = strtok((char *)str.c_str(), declime.c_str());
-        
-        while (p != nullptr)
+        return;
+    }
+
+    ifstream ifile(fileName);
+    if (ifile.good())
+    {
+        while (ifile.eof())
         {
-            res.push_back(p);
-            p = strtok(nullptr, declime.c_str());
+            string str;
+            if (getline(ifile, str) && str.size() > 0)
+            {
+                size_t pos = str.find("(NSB");
+                if (pos == string::npos)
+                {
+                    pos = str.find("(Nokia");
+                }
+
+                if (pos == string::npos)
+                {
+                    pos = str.find("(NSN");
+                }
+
+                if (pos == string::npos)
+                {
+                    continue;
+                }
+
+                size_t posEnd = str.find(")", pos);
+
+                if (posEnd == string::npos)
+                    continue;
+
+                string name = str.substr(0, pos);
+                name.erase(name.find_last_not_of(" \n\r\t") + 1);
+		        name.erase(0, name.find_first_not_of(" \n\r\t"));
+
+                if (name.size() <= 3)
+                    continue;
+
+                cout<<name<<endl;
+                
+            }
         }
-        
-        return res.size() != 0;
     }
-    
-    void dfs(vector<string> &res, int &idx)
-    {
-        if (idx >= res.size())
-            return;
-        
-        if (res[idx] == "#")
-            return;
-        
-        dfs(res, ++idx);
-        dfs(res, ++idx);
-    }
-    
-    
-    bool isValidSerialization(string preorder) {
-        
-        vector<string> res;
-        if (!splitString(preorder, ",", res) )
-            return false;
-        
-        int idx = 0;
-        dfs(res, idx);
-        if (idx >= res.size())
-            return true;
-        else
-            return false;
-    }
-};
+} 
+
+//(NSB
+//(Nokia
+//(NSN
+
 
 int main(int argc, char *argv[])
 {
 
-    Solution().isValidSerialization("9,3,4,#,#,1,#,#,2,#,6,#,#");
+    helper("33");
+    
 
     return EXIT_SUCCESS;
 }

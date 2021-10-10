@@ -13,7 +13,7 @@ void helper(const char *fileName)
     ifstream ifile(fileName);
     if (ifile.good())
     {
-        while (ifile.eof())
+        while (!ifile.eof())
         {
             string str;
             if (getline(ifile, str) && str.size() > 0)
@@ -46,11 +46,19 @@ void helper(const char *fileName)
                 if (name.size() <= 3)
                     continue;
 
-                cout<<name<<endl;
+                hash[name]++;
+                //cout<<name<<endl;
                 
             }
         }
     }
+
+    ofstream ofile("output.txt");
+    for (auto &i : hash)
+    {
+        ofile<<i.first<<"\t"<<i.second<<endl;
+    }
+    ofile.close();
 } 
 
 //(NSB
@@ -61,7 +69,7 @@ void helper(const char *fileName)
 int main(int argc, char *argv[])
 {
 
-    helper("33");
+    helper("mail.txt");
     
 
     return EXIT_SUCCESS;
